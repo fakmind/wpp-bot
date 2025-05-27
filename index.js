@@ -5,6 +5,7 @@ const { detectarMonto } = require('./montoDetector');
 
 let total = 0;
 const DATA_PATH = './data.json';
+const GRUPO_OBJETIVO = 'FAKMIND FOR REAL';
 
 if (fs.existsSync(DATA_PATH)) {
     total = JSON.parse(fs.readFileSync(DATA_PATH)).total || 0;
@@ -18,12 +19,17 @@ client.on('ready', () => {
     console.log('✅ Bot listo y conectado a WhatsApp');
 });
 
-client.on('message', message => {
-    const monto = detectarMonto(message.body);
-    if (monto) {
-        total += monto;
-        fs.writeFileSync(DATA_PATH, JSON.stringify({ total }));
-        message.reply(`✅ Detectado $${monto}. Total acumulado: $${total}`);
+client.on('message', async message => {
+    const chat = await message.getChat();
+
+    // Solo procesar si el mensaje viene del grupo "FAKMIND FOR REAL"
+    if (chat.isGroup && chat.name === GRUPO_OBJETIVO) {
+        const monto = detectarMonto(message.body);
+        if (monto) {
+            total += monto;
+            fs.writeFileSync(DATA_PATH, JSON.stringify({ total }));
+            message.reply(`✅ Detectado $${monto}. Total acumulado: $${total}`);
+        }
     }
 });
 
