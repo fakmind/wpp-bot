@@ -10,9 +10,11 @@ if (fs.existsSync(DATA_PATH)) {
     total = JSON.parse(fs.readFileSync(DATA_PATH)).total || 0;
 }
 
-venom
-  .create({
-    session: 'fakmind-bot'
+venom.create({
+  session: 'fakmind-bot',
+  headless: true,
+  useChrome: false,
+  browserArgs: ['--no-sandbox', '--disable-setuid-sandbox']
   })
   .then(client => start(client))
   .catch(e => console.log(e));
