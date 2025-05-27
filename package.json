@@ -1,13 +1,12 @@
 {
-  "name": "whatsapp-bot-real",
+  "name": "wpp-bot-venom",
   "version": "1.0.0",
+  "description": "Bot de WhatsApp que suma montos con ✅ usando venom-bot",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "start": "node index.js"
   },
   "dependencies": {
-    "qrcode-terminal": "^0.12.0",
-    "whatsapp-web.js": "^1.21.1"
+    "venom-bot": "^5.0.0"
   }
 }
